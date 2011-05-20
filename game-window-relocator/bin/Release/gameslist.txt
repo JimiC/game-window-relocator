@@ -1,0 +1,2 @@
+EVE:ExeFile.exe
+W.o.T:WorldOfTanks.exe
