@@ -1,0 +1,11 @@
+G:\Relocator\Game Window Relocator\bin\Release\GameWindowRelocator.exe
+G:\Relocator\Game Window Relocator\bin\Release\GameWindowRelocator.pdb
+G:\Relocator\Game Window Relocator\obj\x86\Release\ResolveAssemblyReference.cache
+G:\Relocator\Game Window Relocator\obj\x86\Release\GameWindowRelocator.MainWindow.resources
+G:\Relocator\Game Window Relocator\obj\x86\Release\GenerateResource.read.1.tlog
+G:\Relocator\Game Window Relocator\obj\x86\Release\GenerateResource.write.1.tlog
+G:\Relocator\Game Window Relocator\obj\x86\Release\GameWindowRelocator.exe
+G:\Relocator\Game Window Relocator\obj\x86\Release\GameWindowRelocator.pdb
+G:\Relocator\Game Window Relocator\obj\x86\Release\GameWindowRelocator.Views.AddEditControl.resources
+G:\Relocator\Game Window Relocator\obj\x86\Release\GameWindowRelocator.Views.ListControl.resources
+G:\Relocator\Game Window Relocator\obj\x86\Release\GameWindowRelocator.Views.RemoveControl.resources
