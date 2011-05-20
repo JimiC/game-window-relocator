@@ -166,11 +166,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\gameslist.txt" />
     <Content Include="GameWindowRelocator.ico" />
+    <None Include="Resources\gpl.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>"$(SolutionDir)UpdateSVNRevision.cmd" "$(ProjectDir)" $(ConfigurationName)</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(ProjectDir)\Resources\*.txt" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
