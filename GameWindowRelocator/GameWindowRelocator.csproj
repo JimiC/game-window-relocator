@@ -75,6 +75,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Views\AboutControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\AboutControl.Designer.cs">
+      <DependentUpon>AboutControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddEditControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -103,6 +109,15 @@
     <Compile Include="Views\RemoveControl.Designer.cs">
       <DependentUpon>RemoveControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\SettingsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\SettingsControl.Designer.cs">
+      <DependentUpon>SettingsControl.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Views\AboutControl.resx">
+      <DependentUpon>AboutControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\AddEditControl.resx">
       <DependentUpon>AddEditControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -114,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\RemoveControl.resx">
       <DependentUpon>RemoveControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SettingsControl.resx">
+      <DependentUpon>SettingsControl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
