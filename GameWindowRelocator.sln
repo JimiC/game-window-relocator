@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameWindowRelocator", "Game Window Relocator\GameWindowRelocator.csproj", "{226CCF84-0430-4EAD-8544-866B51C1CA84}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameWindowRelocator", "GameWindowRelocator\GameWindowRelocator.csproj", "{226CCF84-0430-4EAD-8544-866B51C1CA84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
