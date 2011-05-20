@@ -32,6 +32,7 @@ namespace GameWindowRelocator.Views
         {
             tbGameClientName.Text = ListControl.SelectedItem.Text;
             tbProcessName.Text = ListControl.SelectedItem.SubItems[1].Text;
+            GamesList.ListOfGames.Remove(ListControl.SelectedItem.Text);
         }
 
         private void okButton_Click(object sender, EventArgs e)
