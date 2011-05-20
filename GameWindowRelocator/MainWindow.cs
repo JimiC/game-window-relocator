@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Globalization;
-using System.Security;
 using System.Windows.Forms;
-using Microsoft.Win32;
 
 namespace GameWindowRelocator
 {
