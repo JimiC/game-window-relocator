@@ -20,21 +20,32 @@ namespace GameWindowRelocator
             if (!startMinimized)
                 return;
 
-            WindowState = FormWindowState.Minimized;
-            ShowInTaskbar = false;
+            MinimizeMainWindow();
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            if (DesignMode)
+                return;
+
+            Visible = false;
             addEditControl.Visible = false;
             removeControl.Visible = false;
 
             timer.Start();
         }
 
+        private void MinimizeMainWindow()
+        {
+            WindowState = FormWindowState.Minimized;
+            ShowInTaskbar = false;
+            Visible = ShowInTaskbar;
+        }
+
         private void RestoreMainWindow()
         {
-            ShowInTaskbar = true;
+            Visible = true;
+            ShowInTaskbar = Visible;
             WindowState = FormWindowState.Normal;
             Activate();
         }
@@ -124,7 +135,7 @@ namespace GameWindowRelocator
                 return;
 
             RestoreMainWindow();
-            tabControl.SelectedTab = tpGameList;
+            tabControl.SelectedTab = tpGamesList;
         }
 
         private void mainWindow_FormClosing(object sender, FormClosingEventArgs e)
@@ -135,8 +146,7 @@ namespace GameWindowRelocator
                 return;
 
             e.Cancel = true;
-            WindowState = FormWindowState.Minimized;
-            ShowInTaskbar = false;
+            MinimizeMainWindow();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -149,7 +159,7 @@ namespace GameWindowRelocator
         private void gamesListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RestoreMainWindow();
-            tabControl.SelectedTab = tpGameList;
+            tabControl.SelectedTab = tpGamesList;
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)

@@ -10,6 +10,9 @@ namespace GameWindowRelocator.Views
         {
             InitializeComponent();
 
+            if (DesignMode)
+                return;
+
             VisibleChanged += AddEditControl_VisibleChanged;
         }
 

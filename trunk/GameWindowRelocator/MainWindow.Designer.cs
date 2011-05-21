@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.tabControl = new System.Windows.Forms.TabControl();
-            this.tpGameList = new System.Windows.Forms.TabPage();
+            this.tpGamesList = new System.Windows.Forms.TabPage();
             this.tpSettings = new System.Windows.Forms.TabPage();
             this.settingsControl = new GameWindowRelocator.Views.SettingsControl();
             this.tpAbout = new System.Windows.Forms.TabPage();
@@ -39,7 +39,9 @@
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.trayIconCMS = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.relocateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showClientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.releaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showClientsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tssRelocate = new System.Windows.Forms.ToolStripSeparator();
             this.gamesListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tssRestore = new System.Windows.Forms.ToolStripSeparator();
@@ -47,13 +49,11 @@
             this.tssSettings = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer = new System.Windows.Forms.Timer(this.components);
-            this.showClientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showClientsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.listControl = new GameWindowRelocator.Views.ListControl();
             this.addEditControl = new GameWindowRelocator.Views.AddEditControl();
             this.removeControl = new GameWindowRelocator.Views.RemoveControl();
             this.tabControl.SuspendLayout();
-            this.tpGameList.SuspendLayout();
+            this.tpGamesList.SuspendLayout();
             this.tpSettings.SuspendLayout();
             this.tpAbout.SuspendLayout();
             this.trayIconCMS.SuspendLayout();
@@ -61,7 +61,7 @@
             // 
             // tabControl
             // 
-            this.tabControl.Controls.Add(this.tpGameList);
+            this.tabControl.Controls.Add(this.tpGamesList);
             this.tabControl.Controls.Add(this.tpSettings);
             this.tabControl.Controls.Add(this.tpAbout);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -71,18 +71,18 @@
             this.tabControl.Size = new System.Drawing.Size(284, 262);
             this.tabControl.TabIndex = 1;
             // 
-            // tpGameList
+            // tpGamesList
             // 
-            this.tpGameList.Controls.Add(this.listControl);
-            this.tpGameList.Controls.Add(this.addEditControl);
-            this.tpGameList.Controls.Add(this.removeControl);
-            this.tpGameList.Location = new System.Drawing.Point(4, 22);
-            this.tpGameList.Name = "tpGameList";
-            this.tpGameList.Padding = new System.Windows.Forms.Padding(3);
-            this.tpGameList.Size = new System.Drawing.Size(276, 236);
-            this.tpGameList.TabIndex = 0;
-            this.tpGameList.Text = "Game List";
-            this.tpGameList.UseVisualStyleBackColor = true;
+            this.tpGamesList.Controls.Add(this.listControl);
+            this.tpGamesList.Controls.Add(this.addEditControl);
+            this.tpGamesList.Controls.Add(this.removeControl);
+            this.tpGamesList.Location = new System.Drawing.Point(4, 22);
+            this.tpGamesList.Name = "tpGamesList";
+            this.tpGamesList.Padding = new System.Windows.Forms.Padding(3);
+            this.tpGamesList.Size = new System.Drawing.Size(276, 236);
+            this.tpGamesList.TabIndex = 0;
+            this.tpGamesList.Text = "Games List";
+            this.tpGamesList.UseVisualStyleBackColor = true;
             // 
             // listControl
             // 
@@ -173,6 +173,12 @@
             this.relocateToolStripMenuItem.Text = "Relocate";
             this.relocateToolStripMenuItem.DropDownOpening += new System.EventHandler(this.actionToolStripMenuItem_DropDownOpening);
             // 
+            // showClientsToolStripMenuItem
+            // 
+            this.showClientsToolStripMenuItem.Name = "showClientsToolStripMenuItem";
+            this.showClientsToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.showClientsToolStripMenuItem.Text = "show clients";
+            // 
             // releaseToolStripMenuItem
             // 
             this.releaseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -181,6 +187,12 @@
             this.releaseToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.releaseToolStripMenuItem.Text = "Release";
             this.releaseToolStripMenuItem.DropDownOpening += new System.EventHandler(this.actionToolStripMenuItem_DropDownOpening);
+            // 
+            // showClientsToolStripMenuItem1
+            // 
+            this.showClientsToolStripMenuItem1.Name = "showClientsToolStripMenuItem1";
+            this.showClientsToolStripMenuItem1.Size = new System.Drawing.Size(139, 22);
+            this.showClientsToolStripMenuItem1.Text = "show clients";
             // 
             // tssRelocate
             // 
@@ -222,25 +234,12 @@
             // 
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
-            // showClientsToolStripMenuItem
-            // 
-            this.showClientsToolStripMenuItem.Name = "showClientsToolStripMenuItem";
-            this.showClientsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.showClientsToolStripMenuItem.Text = "show clients";
-            // 
-            // showClientsToolStripMenuItem1
-            // 
-            this.showClientsToolStripMenuItem1.Name = "showClientsToolStripMenuItem1";
-            this.showClientsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.showClientsToolStripMenuItem1.Text = "show clients";
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
             this.Controls.Add(this.tabControl);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -250,7 +249,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.mainWindow_FormClosing);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.tabControl.ResumeLayout(false);
-            this.tpGameList.ResumeLayout(false);
+            this.tpGamesList.ResumeLayout(false);
             this.tpSettings.ResumeLayout(false);
             this.tpAbout.ResumeLayout(false);
             this.trayIconCMS.ResumeLayout(false);
@@ -261,7 +260,7 @@
         #endregion
 
         private System.Windows.Forms.TabControl tabControl;
-        private System.Windows.Forms.TabPage tpGameList;
+        private System.Windows.Forms.TabPage tpGamesList;
         private System.Windows.Forms.TabPage tpSettings;
         private System.Windows.Forms.TabPage tpAbout;
         private System.Windows.Forms.NotifyIcon notifyIcon;
@@ -275,13 +274,13 @@
         private System.Windows.Forms.ToolStripMenuItem gamesListToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator tssRestore;
         private System.Windows.Forms.Timer timer;
-        private Views.ListControl listControl;
-        private Views.AddEditControl addEditControl;
-        private Views.RemoveControl removeControl;
         private Views.SettingsControl settingsControl;
         private Views.AboutControl aboutControl;
         private System.Windows.Forms.ToolStripMenuItem showClientsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showClientsToolStripMenuItem1;
+        private Views.ListControl listControl;
+        private Views.AddEditControl addEditControl;
+        private Views.RemoveControl removeControl;
 
     }
 }
