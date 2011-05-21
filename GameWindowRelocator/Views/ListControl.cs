@@ -11,8 +11,11 @@ namespace GameWindowRelocator.Views
         {
             InitializeComponent();
 
-            VisibleChanged += ListControl_VisibleChanged;
+            if (DesignMode)
+                return;
 
+            VisibleChanged += ListControl_VisibleChanged;
+            
             GamesList.Import();
         }
 
