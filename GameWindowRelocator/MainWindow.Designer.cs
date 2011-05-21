@@ -47,6 +47,8 @@
             this.tssSettings = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer = new System.Windows.Forms.Timer(this.components);
+            this.showClientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showClientsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.listControl = new GameWindowRelocator.Views.ListControl();
             this.addEditControl = new GameWindowRelocator.Views.AddEditControl();
             this.removeControl = new GameWindowRelocator.Views.RemoveControl();
@@ -160,61 +162,77 @@
             this.tssSettings,
             this.exitToolStripMenuItem});
             this.trayIconCMS.Name = "trayIconCMS";
-            this.trayIconCMS.Size = new System.Drawing.Size(153, 154);
+            this.trayIconCMS.Size = new System.Drawing.Size(132, 132);
             // 
             // relocateToolStripMenuItem
             // 
+            this.relocateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showClientsToolStripMenuItem});
             this.relocateToolStripMenuItem.Name = "relocateToolStripMenuItem";
-            this.relocateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.relocateToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.relocateToolStripMenuItem.Text = "Relocate";
-            this.relocateToolStripMenuItem.DropDownOpening += new System.EventHandler(this.relocateToolStripMenuItem_DropDownOpening);
+            this.relocateToolStripMenuItem.DropDownOpening += new System.EventHandler(this.actionToolStripMenuItem_DropDownOpening);
             // 
             // releaseToolStripMenuItem
             // 
+            this.releaseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showClientsToolStripMenuItem1});
             this.releaseToolStripMenuItem.Name = "releaseToolStripMenuItem";
-            this.releaseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.releaseToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.releaseToolStripMenuItem.Text = "Release";
-            this.releaseToolStripMenuItem.DropDownOpening += new System.EventHandler(this.releaseToolStripMenuItem_DropDownOpening);
+            this.releaseToolStripMenuItem.DropDownOpening += new System.EventHandler(this.actionToolStripMenuItem_DropDownOpening);
             // 
             // tssRelocate
             // 
             this.tssRelocate.Name = "tssRelocate";
-            this.tssRelocate.Size = new System.Drawing.Size(149, 6);
+            this.tssRelocate.Size = new System.Drawing.Size(128, 6);
             // 
             // gamesListToolStripMenuItem
             // 
             this.gamesListToolStripMenuItem.Name = "gamesListToolStripMenuItem";
-            this.gamesListToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gamesListToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.gamesListToolStripMenuItem.Text = "Games List";
             this.gamesListToolStripMenuItem.Click += new System.EventHandler(this.gamesListToolStripMenuItem_Click);
             // 
             // tssRestore
             // 
             this.tssRestore.Name = "tssRestore";
-            this.tssRestore.Size = new System.Drawing.Size(149, 6);
+            this.tssRestore.Size = new System.Drawing.Size(128, 6);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // tssSettings
             // 
             this.tssSettings.Name = "tssSettings";
-            this.tssSettings.Size = new System.Drawing.Size(149, 6);
+            this.tssSettings.Size = new System.Drawing.Size(128, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // timer
             // 
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
+            // 
+            // showClientsToolStripMenuItem
+            // 
+            this.showClientsToolStripMenuItem.Name = "showClientsToolStripMenuItem";
+            this.showClientsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.showClientsToolStripMenuItem.Text = "show clients";
+            // 
+            // showClientsToolStripMenuItem1
+            // 
+            this.showClientsToolStripMenuItem1.Name = "showClientsToolStripMenuItem1";
+            this.showClientsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.showClientsToolStripMenuItem1.Text = "show clients";
             // 
             // MainWindow
             // 
@@ -262,6 +280,8 @@
         private Views.RemoveControl removeControl;
         private Views.SettingsControl settingsControl;
         private Views.AboutControl aboutControl;
+        private System.Windows.Forms.ToolStripMenuItem showClientsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showClientsToolStripMenuItem1;
 
     }
 }

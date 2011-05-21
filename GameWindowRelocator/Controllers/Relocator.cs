@@ -17,15 +17,15 @@ namespace GameWindowRelocator
     {
         public delegate bool WindowFoundHandler(int hwnd, int lParam);
 
-        private static bool s_initilized;
         private static readonly int s_pid = Application.ProductName.GetHashCode();
         private static readonly List<IntPtr> s_foundWindows = new List<IntPtr>();
         private static int s_autoRelocateDefaultMonitor;
         private static int s_counter;
         private static bool s_autoRelocation;
         private static bool s_dialogActive;
+        private static bool s_initilized;
 
-        public static void Initialize()
+        internal static void Initialize()
         {
             if (s_initilized)
                 return;
@@ -95,12 +95,12 @@ namespace GameWindowRelocator
         }
         #endregion
 
-        #region Public functions
+        #region Internal functions
         /// <summary>
         /// Identifies all open game instances.
         /// </summary>
         /// <returns>IntPtr array of game instances</returns>
-        public static IEnumerable<IntPtr> FindGameWindows()
+        internal static IEnumerable<IntPtr> FindGameWindows()
         {
             lock (s_foundWindows)
             {
@@ -115,9 +115,10 @@ namespace GameWindowRelocator
         /// </summary>
         /// <param name="hWnd">The game instance to be moved</param>
         /// <param name="targetScreen">Screen to be moved to</param>
-        public static void Relocate(IntPtr hWnd, int targetScreen)
+        internal static void Relocate(IntPtr hWnd, int targetScreen)
         {
             Rectangle cr = GetClientRectInScreenCoords(hWnd);
+            var sr = GetWindowRect(hWnd);
             Screen sc = Screen.AllScreens[targetScreen];
 
             // Null guard? Could in any case sc be null?
@@ -135,12 +136,32 @@ namespace GameWindowRelocator
             NativeRelocatorMethods.MoveWindow(hWnd, sc.Bounds.X, sc.Bounds.Y, cr.Width, cr.Height, true);
         }
 
+        internal static void Release(IntPtr instanceCopy, int screenCopy)
+        {
+            Rectangle cr = GetClientRectInScreenCoords(instanceCopy);
+            Screen sc = Screen.AllScreens[screenCopy];
+
+            // Null guard? Could in any case sc be null?
+            if (sc == null)
+                return;
+
+            // Grab the current window style
+            int oldStyle = NativeRelocatorMethods.GetWindowLong(instanceCopy, NativeRelocatorMethods.GWL_STYLE);
+
+            // Turn off dialog frame, border and sizebox atttribute
+            int newStyle = oldStyle + (NativeRelocatorMethods.WS_DLGFRAME | NativeRelocatorMethods.WS_BORDER | NativeRelocatorMethods.WS_SIZEBOX);
+
+            NativeRelocatorMethods.SetWindowLong(instanceCopy, NativeRelocatorMethods.GWL_STYLE, newStyle);
+
+            NativeRelocatorMethods.MoveWindow(instanceCopy, sc.Bounds.X, sc.Bounds.Y, cr.Width + 16, cr.Height + 38, true);
+        }
+
         /// <summary>
         /// Get's the title bar text and resolution of the specified window.
         /// </summary>
         /// <param name="hWnd">Passed game client instance</param>
         /// <returns>String containing the title bar text and resolution</returns>
-        public static string GetWindowDescription(this IntPtr hWnd)
+        internal static string GetWindowDescription(this IntPtr hWnd)
         {
             var sb = new StringBuilder(512);
 
@@ -166,7 +187,7 @@ namespace GameWindowRelocator
         /// </summary>
         /// <param name="screen">Integer of the screen to be identified</param>
         /// <returns>Screen z - WidthxHeight</returns>
-        public static string GetScreenDescription(this int screen)
+        internal static string GetScreenDescription(this int screen)
         {
             Screen sc = Screen.AllScreens[screen];
             return String.Format(CultureInfo.CurrentCulture, "Screen {0} - {1}x{2}",
@@ -180,7 +201,7 @@ namespace GameWindowRelocator
         /// <returns>
         /// 	<c>true</c> if the specified game client instance is relocated; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsRelocated(this IntPtr hWnd)
+        internal static bool IsRelocated(this IntPtr hWnd)
         {
             Rectangle ncr = hWnd.GetWindowRect();
             Rectangle cr = hWnd.GetClientRectInScreenCoords();
@@ -197,19 +218,18 @@ namespace GameWindowRelocator
         /// <returns>
         /// 	<c>true</c> if the specified game client instance is minimized; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsMinimized(this IntPtr hWnd)
+        internal static bool IsMinimized(this IntPtr hWnd)
         {
             Rectangle cr = hWnd.GetClientRectInScreenCoords();
             return (cr.Height == 0 && cr.Width == 0);
         }
-
         #endregion
 
         #region Automatic Relocation
         /// <summary>
         /// Gets the state of autorelocation checkbox.
         /// </summary>  
-        public static bool AutoRelocationEnabled
+        internal static bool AutoRelocationEnabled
         {
             get
             {
@@ -220,7 +240,7 @@ namespace GameWindowRelocator
         /// <summary>
         /// Gets the autorelocate default monitor.
         /// </summary>  
-        public static int AutoRelocateDefaultMonitor
+        internal static int AutoRelocateDefaultMonitor
         {
             get
             {
