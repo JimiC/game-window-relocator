@@ -39,16 +39,15 @@ namespace GameWindowRelocator
             Activate();
         }
 
-        /// <summary> 
-        /// 
-        /// </summary> 
-        /// <param name="sender"></param> 
-        /// <param name="e"></param> 
-        private void relocateToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        private void actionToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
             int screenCount = Screen.AllScreens.Length;
             var rootMenu = (ToolStripDropDownItem)sender;
             rootMenu.DropDownItems.Clear();
+
+            Action action = Action.None;
+            if (Enum.IsDefined(typeof(Action), rootMenu.Text))
+                action = (Action)Enum.Parse(typeof(Action), rootMenu.Text, true);
 
             // Add one menu entry per game client 
             bool foundAny = false;
@@ -59,7 +58,7 @@ namespace GameWindowRelocator
                 if (gameInstance == IntPtr.Zero)
                     continue;
 
-                // Relocator menu disabled when autorelocate is active or client is minimized 
+                // Action menu disabled when autorelocate is active or client is minimized 
                 var instanceMenu = new ToolStripMenuItem(gameInstance.GetWindowDescription())
                 {
                     Enabled = !gameInstance.IsMinimized() && !Relocator.AutoRelocationEnabled
@@ -76,18 +75,25 @@ namespace GameWindowRelocator
                     if (gameInstance.GetClientRectInScreenCoords().Width > Screen.AllScreens[screenCopy].Bounds.Width)
                         continue;
 
-                    var screenMenu = new ToolStripMenuItem(screenCopy.GetScreenDescription())
-                    {
-                        // When a client is relocated to a monitor we disable its selection option 
-                        Enabled = !(gameInstance.IsRelocated() || m_relocatedMonitor == screenCopy)
-                    };
+                    var screenMenu = new ToolStripMenuItem(screenCopy.GetScreenDescription());
+                    screenMenu.Enabled = (action == Action.Relocate ? !gameInstance.IsRelocated() : gameInstance.IsRelocated());
 
                     // Handles the selection press 
-                    screenMenu.Click += (senders, args) =>
+                    if (action == Action.Relocate)
                     {
-                        Relocator.Relocate(instanceCopy, screenCopy);
-                        m_relocatedMonitor = screenCopy;
-                    };
+                        screenMenu.Click += (senders, args) =>
+                        {
+                            Relocator.Relocate(instanceCopy, screenCopy);
+                            m_relocatedMonitor = screenCopy;
+                        };
+                    }
+                    else if (action == Action.Release)
+                    {
+                        screenMenu.Click += (senders, args) =>
+                        {
+                            Relocator.Release(instanceCopy, screenCopy);
+                        };
+                    }
 
                     // Adds the submenu 
                     instanceMenu.DropDownItems.Add(screenMenu);
@@ -98,20 +104,18 @@ namespace GameWindowRelocator
                 foundAny = true;
             }
 
-            // Displays a "no window" message when there were no windows opened 
+            // Displays a message when there were no windows found
             if (!foundAny)
             {
-                var menu = new ToolStripMenuItem("No listed game is running.")
+                string text = String.Format("No listed game is {0}",
+                                action == Action.Relocate ? "running." : "relocated.");
+
+                var menu = new ToolStripMenuItem(text)
                 {
                     Enabled = false
                 };
                 rootMenu.DropDownItems.Add(menu);
             }
-        }
-
-        private void releaseToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
-        {
-
         }
 
         private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -157,6 +161,13 @@ namespace GameWindowRelocator
         private void timer_Tick(object sender, EventArgs e)
         {
             Relocator.TimerTick();
+        }
+
+        private enum Action
+        {
+            None = -1,
+            Relocate = 0,
+            Release = 1
         }
     }
 }
