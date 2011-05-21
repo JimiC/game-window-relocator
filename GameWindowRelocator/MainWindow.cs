@@ -44,13 +44,13 @@ namespace GameWindowRelocator
         /// </summary> 
         /// <param name="sender"></param> 
         /// <param name="e"></param> 
-        private void relocationMenu_DropDownOpening(object sender, EventArgs e)
+        private void relocateToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
             int screenCount = Screen.AllScreens.Length;
             var rootMenu = (ToolStripDropDownItem)sender;
             rootMenu.DropDownItems.Clear();
 
-            // Add one menu entry per eve client 
+            // Add one menu entry per game client 
             bool foundAny = false;
             var gameWindows = Relocator.FindGameWindows();
             foreach (IntPtr gameInstance in gameWindows)
@@ -79,7 +79,7 @@ namespace GameWindowRelocator
                     var screenMenu = new ToolStripMenuItem(screenCopy.GetScreenDescription())
                     {
                         // When a client is relocated to a monitor we disable its selection option 
-                        Enabled = !(gameInstance.IsRelocated() && m_relocatedMonitor == screenCopy)
+                        Enabled = !(gameInstance.IsRelocated() || m_relocatedMonitor == screenCopy)
                     };
 
                     // Handles the selection press 
@@ -109,19 +109,21 @@ namespace GameWindowRelocator
             }
         }
 
+        private void releaseToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+
+        }
+
         private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
-            {
-                trayIconCMS.Visible = true;
                 return;
-            }
 
             RestoreMainWindow();
             tabControl.SelectedTab = tpGameList;
         }
 
-        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        private void mainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.ApplicationExitCall ||
                 e.CloseReason == CloseReason.WindowsShutDown ||
@@ -138,6 +140,12 @@ namespace GameWindowRelocator
             Properties.Settings.Default.Save();
             timer.Stop();
             Application.Exit();
+        }
+
+        private void gamesListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RestoreMainWindow();
+            tabControl.SelectedTab = tpGameList;
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
