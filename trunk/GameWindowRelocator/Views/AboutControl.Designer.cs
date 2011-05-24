@@ -35,12 +35,12 @@
             // 
             this.aboutLabel.AutoSize = true;
             this.aboutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.aboutLabel.Location = new System.Drawing.Point(49, 30);
+            this.aboutLabel.Location = new System.Drawing.Point(22, 30);
             this.aboutLabel.Name = "aboutLabel";
-            this.aboutLabel.Size = new System.Drawing.Size(179, 176);
+            this.aboutLabel.Size = new System.Drawing.Size(232, 176);
             this.aboutLabel.TabIndex = 1;
-            this.aboutLabel.Text = "Game Window Relocator\r\n\r\n v1.0.0\r\n\r\n\r\nLicenced under GPL v2\r\n\r\n\r\nCreated by Jimi " +
-                "C\r\n\r\nMay 2011\r\n";
+            this.aboutLabel.Text = "Game Window Relocator\r\n\r\n v1.0.0\r\n\r\nLicenced under GPL v2\r\n\r\nBased on code create" +
+                "d by\r\nthe EVEMon Development Team\r\n\r\nCreated by Jimi C\r\nMay 2011\r\n";
             this.aboutLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // AboutControl
