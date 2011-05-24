@@ -9,11 +9,18 @@ namespace GameWindowRelocator
         private int m_relocatedMonitor = -1;
 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// </summary>
+        /// <param name="startMinimized">if set to <c>true</c> start minimized.</param>
         public MainWindow(bool startMinimized)
             : this()
         {
@@ -23,6 +30,11 @@ namespace GameWindowRelocator
             MinimizeMainWindow();
         }
 
+        /// <summary>
+        /// Handles the Load event of the MainWindow control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void MainWindow_Load(object sender, EventArgs e)
         {
             if (DesignMode)
@@ -35,6 +47,9 @@ namespace GameWindowRelocator
             timer.Start();
         }
 
+        /// <summary>
+        /// Minimizes the main window.
+        /// </summary>
         private void MinimizeMainWindow()
         {
             WindowState = FormWindowState.Minimized;
@@ -42,6 +57,9 @@ namespace GameWindowRelocator
             Visible = ShowInTaskbar;
         }
 
+        /// <summary>
+        /// Restores the main window.
+        /// </summary>
         private void RestoreMainWindow()
         {
             Visible = true;
@@ -50,6 +68,11 @@ namespace GameWindowRelocator
             Activate();
         }
 
+        /// <summary>
+        /// Handles the DropDownOpening event of the actionToolStripMenuItem control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void actionToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
             int screenCount = Screen.AllScreens.Length;
@@ -129,6 +152,11 @@ namespace GameWindowRelocator
             }
         }
 
+        /// <summary>
+        /// Handles the MouseDoubleClick event of the notifyIcon control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
         private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -138,6 +166,11 @@ namespace GameWindowRelocator
             tabControl.SelectedTab = tpGamesList;
         }
 
+        /// <summary>
+        /// Handles the FormClosing event of the mainWindow control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.FormClosingEventArgs"/> instance containing the event data.</param>
         private void mainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.ApplicationExitCall ||
@@ -149,6 +182,11 @@ namespace GameWindowRelocator
             MinimizeMainWindow();
         }
 
+        /// <summary>
+        /// Handles the Click event of the exitToolStripMenuItem control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.Save();
@@ -156,27 +194,54 @@ namespace GameWindowRelocator
             Application.Exit();
         }
 
+        /// <summary>
+        /// Handles the Click event of the gamesListToolStripMenuItem control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void gamesListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RestoreMainWindow();
             tabControl.SelectedTab = tpGamesList;
         }
 
+        /// <summary>
+        /// Handles the Click event of the settingsToolStripMenuItem control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RestoreMainWindow();
             tabControl.SelectedTab = tpSettings;
         }
 
+        /// <summary>
+        /// Handles the Tick event of the timer control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void timer_Tick(object sender, EventArgs e)
         {
             Relocator.TimerTick();
         }
 
+        /// <summary>
+        /// Enumerations for the relocator actions.
+        /// </summary>
         private enum Action
         {
+            /// <summary>
+            /// 
+            /// </summary>
             None = -1,
+            /// <summary>
+            /// 
+            /// </summary>
             Relocate = 0,
+            /// <summary>
+            /// 
+            /// </summary>
             Release = 1
         }
     }

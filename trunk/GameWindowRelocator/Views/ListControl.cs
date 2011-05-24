@@ -7,6 +7,9 @@ namespace GameWindowRelocator.Views
 {
     public partial class ListControl : UserControl
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListControl"/> class.
+        /// </summary>
         internal ListControl()
         {
             InitializeComponent();
@@ -19,9 +22,15 @@ namespace GameWindowRelocator.Views
             GamesList.Import();
         }
 
-        public static ListViewItem SelectedItem
-        { get; private set; }
+        /// <summary>
+        /// Gets or sets the selected item.
+        /// </summary>
+        /// <value>The selected item.</value>
+        public static ListViewItem SelectedItem { get; private set; }
 
+        /// <summary>
+        /// Populates the list.
+        /// </summary>
         private void PopulateList()
         {
             listView.Items.Clear();
@@ -36,6 +45,9 @@ namespace GameWindowRelocator.Views
             listView_SelectedIndexChanged(null, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Shows the add edit control.
+        /// </summary>
         private void ShowAddEditControl()
         {
             Visible = false;
@@ -43,6 +55,11 @@ namespace GameWindowRelocator.Views
             Parent.Controls["removeControl"].Visible = false;
         }
 
+        /// <summary>
+        /// Handles the VisibleChanged event of the ListControl control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void ListControl_VisibleChanged(object sender, EventArgs e)
         {
             if (!Visible)
@@ -51,18 +68,33 @@ namespace GameWindowRelocator.Views
             PopulateList();
         }
 
+        /// <summary>
+        /// Handles the Click event of the addButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void addButton_Click(object sender, EventArgs e)
         {
             AddEditControl.Edit = false;
             ShowAddEditControl();
         }
 
+        /// <summary>
+        /// Handles the Click event of the editButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void editButton_Click(object sender, EventArgs e)
         {
             AddEditControl.Edit = true;
             ShowAddEditControl();
         }
 
+        /// <summary>
+        /// Handles the Click event of the removeButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void removeButton_Click(object sender, EventArgs e)
         {
             Visible = false;
@@ -70,6 +102,11 @@ namespace GameWindowRelocator.Views
             Parent.Controls["removeControl"].Visible = true;
         }
 
+        /// <summary>
+        /// Handles the SelectedIndexChanged event of the listView control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void listView_SelectedIndexChanged(object sender, EventArgs e)
         {
             SelectedItem = (listView.SelectedItems.Count > 0 ? listView.SelectedItems[0] : null);

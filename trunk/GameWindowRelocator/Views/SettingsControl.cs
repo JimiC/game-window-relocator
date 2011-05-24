@@ -9,12 +9,20 @@ namespace GameWindowRelocator.Views
     public partial class SettingsControl : UserControl
     {
         private const string StartupRegistryKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SettingsControl"/> class.
+        /// </summary>
         public SettingsControl()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Handles the Load event of the Settings control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Settings_Load(object sender, EventArgs e)
         {
             // Run at system startup
@@ -49,6 +57,11 @@ namespace GameWindowRelocator.Views
             timeIntervalNUD.Value = Properties.Settings.Default.AutomaticRelocationInterval;
         }
 
+        /// <summary>
+        /// Handles the CheckedChanged event of the startWithWindowsCheckBox control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void startWithWindowsCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             // Run at startup
@@ -64,13 +77,23 @@ namespace GameWindowRelocator.Views
                 rk.DeleteValue("GameWindowRelocator", false);
             }
         }
-        
+
+        /// <summary>
+        /// Handles the CheckedChanged event of the enableAutoRelacationChechBox control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void enableAutoRelacationChechBox_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.EnableAutomaticRelocation = enableAutoRelacationChechBox.Checked;
             Properties.Settings.Default.Save();
         }
 
+        /// <summary>
+        /// Handles the ValueChanged event of the timeIntervalNUD control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void timeIntervalNUD_ValueChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.AutomaticRelocationInterval = (byte)timeIntervalNUD.Value;

@@ -148,7 +148,7 @@ namespace GameWindowRelocator
             // Grab the current window style
             int oldStyle = NativeRelocatorMethods.GetWindowLong(instanceCopy, NativeRelocatorMethods.GWL_STYLE);
 
-            // Turn off dialog frame, border and sizebox atttribute
+            // Turn on dialog frame, border and sizebox atttribute
             int newStyle = oldStyle + (NativeRelocatorMethods.WS_DLGFRAME | NativeRelocatorMethods.WS_BORDER | NativeRelocatorMethods.WS_SIZEBOX);
 
             NativeRelocatorMethods.SetWindowLong(instanceCopy, NativeRelocatorMethods.GWL_STYLE, newStyle);
@@ -172,7 +172,7 @@ namespace GameWindowRelocator
 
             if ((cr.Height == 0) && (cr.Width == 0))
             {
-                sb.Append("Minimized");
+                sb.AppendFormat(CultureInfo.CurrentCulture, "Minimized");
             }
             else
             {
@@ -302,12 +302,13 @@ namespace GameWindowRelocator
             }
 
             // Show the dialog window
-            if (!s_dialogActive)
-            {
-                s_dialogActive = true;
-                ShowDialog(gameInstance, sameResScr);
-                s_dialogActive = false;
-            }
+            if (s_dialogActive)
+                return;
+
+            s_dialogActive = true;
+            ShowDialog(gameInstance, sameResScr);
+            s_dialogActive = false;
+
         }
 
         /// <summary>
@@ -413,7 +414,7 @@ namespace GameWindowRelocator
 
                     var button = new Button();
                     button.AutoSize = true;
-                    button.Text = @"Monitor " + (scr + 1);
+                    button.Text = String.Format(CultureInfo.CurrentCulture, "Monitor {0}", scr + 1);
                     button.Location = new Point(startPoint + ((sectionWidth - button.Width) / 2), height);
                     buttonHeight = button.Height;
                     buttons.Add(button);
@@ -433,7 +434,7 @@ namespace GameWindowRelocator
                 var checkbox = new CheckBox();
                 checkbox.AutoSize = true;
                 checkbox.TextAlign = ContentAlignment.MiddleLeft;
-                checkbox.Text = @"Set my choice as the default monitor.";
+                checkbox.Text = "Set my choice as the default monitor.";
                 checkbox.Location = new Point(10, height);
                 panel.Controls.Add(checkbox);
                 height += checkbox.Height + (vpad / 2);
