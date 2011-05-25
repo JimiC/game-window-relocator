@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
+using GameWindowRelocator.Controllers;
 
 namespace GameWindowRelocator
 {
     public partial class MainWindow : Form
     {
-
-        private int m_relocatedMonitor = -1;
-
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -79,9 +77,9 @@ namespace GameWindowRelocator
             var rootMenu = (ToolStripDropDownItem)sender;
             rootMenu.DropDownItems.Clear();
 
-            Action action = Action.None;
-            if (Enum.IsDefined(typeof(Action), rootMenu.Text))
-                action = (Action)Enum.Parse(typeof(Action), rootMenu.Text, true);
+            PositioningAction action = PositioningAction.None;
+            if (Enum.IsDefined(typeof(PositioningAction), rootMenu.Text))
+                action = (PositioningAction)Enum.Parse(typeof(PositioningAction), rootMenu.Text, true);
 
             // Add one menu entry per game client 
             bool foundAny = false;
@@ -110,24 +108,13 @@ namespace GameWindowRelocator
                         continue;
 
                     var screenMenu = new ToolStripMenuItem(screenCopy.GetScreenDescription());
-                    screenMenu.Enabled = (action == Action.Relocate ? !gameInstance.IsRelocated() : gameInstance.IsRelocated());
+                    screenMenu.Enabled = (action == PositioningAction.Relocate ? !gameInstance.IsRelocated() : gameInstance.IsRelocated());
 
                     // Handles the selection press 
-                    if (action == Action.Relocate)
+                    screenMenu.Click += (senders, args) =>
                     {
-                        screenMenu.Click += (senders, args) =>
-                        {
-                            Relocator.Relocate(instanceCopy, screenCopy);
-                            m_relocatedMonitor = screenCopy;
-                        };
-                    }
-                    else if (action == Action.Release)
-                    {
-                        screenMenu.Click += (senders, args) =>
-                        {
-                            Relocator.Release(instanceCopy, screenCopy);
-                        };
-                    }
+                        Relocator.PositionWindow(instanceCopy, screenCopy, action);
+                    };
 
                     // Adds the submenu 
                     instanceMenu.DropDownItems.Add(screenMenu);
@@ -142,7 +129,7 @@ namespace GameWindowRelocator
             if (!foundAny)
             {
                 string text = String.Format("No listed game is {0}",
-                                action == Action.Relocate ? "running." : "relocated.");
+                                action == PositioningAction.Relocate ? "running." : "relocated.");
 
                 var menu = new ToolStripMenuItem(text)
                 {
@@ -224,25 +211,6 @@ namespace GameWindowRelocator
         private void timer_Tick(object sender, EventArgs e)
         {
             Relocator.TimerTick();
-        }
-
-        /// <summary>
-        /// Enumerations for the relocator actions.
-        /// </summary>
-        private enum Action
-        {
-            /// <summary>
-            /// 
-            /// </summary>
-            None = -1,
-            /// <summary>
-            /// 
-            /// </summary>
-            Relocate = 0,
-            /// <summary>
-            /// 
-            /// </summary>
-            Release = 1
         }
     }
 }
