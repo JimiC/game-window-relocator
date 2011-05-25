@@ -115,10 +115,12 @@ namespace GameWindowRelocator
         /// </summary>
         /// <param name="hWnd">The game instance to be moved</param>
         /// <param name="targetScreen">Screen to be moved to</param>
-        internal static void Relocate(IntPtr hWnd, int targetScreen)
+        /// <param name="action">The positioning action.</param>
+        internal static void PositionWindow(IntPtr hWnd, int targetScreen, PositioningAction action)
         {
+            int hBorder = (action == PositioningAction.Release ? 16 : 0);
+            int vBorder = (action == PositioningAction.Release ? 38 : 0);
             Rectangle cr = GetClientRectInScreenCoords(hWnd);
-            var sr = GetWindowRect(hWnd);
             Screen sc = Screen.AllScreens[targetScreen];
 
             // Null guard? Could in any case sc be null?
@@ -128,32 +130,15 @@ namespace GameWindowRelocator
             // Grab the current window style
             int oldStyle = NativeRelocatorMethods.GetWindowLong(hWnd, NativeRelocatorMethods.GWL_STYLE);
 
-            // Turn off dialog frame, border and sizebox atttribute
-            int newStyle = oldStyle & ~(NativeRelocatorMethods.WS_DLGFRAME | NativeRelocatorMethods.WS_BORDER | NativeRelocatorMethods.WS_SIZEBOX);
+            // Window style attributes
+            int attributes = (NativeRelocatorMethods.WS_DLGFRAME | NativeRelocatorMethods.WS_BORDER | NativeRelocatorMethods.WS_SIZEBOX);
+
+            // Turn on/off dialog frame, border and sizebox atttribute
+            int newStyle = (action == PositioningAction.Relocate ? oldStyle - attributes : oldStyle + attributes);
 
             NativeRelocatorMethods.SetWindowLong(hWnd, NativeRelocatorMethods.GWL_STYLE, newStyle);
 
-            NativeRelocatorMethods.MoveWindow(hWnd, sc.Bounds.X, sc.Bounds.Y, cr.Width, cr.Height, true);
-        }
-
-        internal static void Release(IntPtr instanceCopy, int screenCopy)
-        {
-            Rectangle cr = GetClientRectInScreenCoords(instanceCopy);
-            Screen sc = Screen.AllScreens[screenCopy];
-
-            // Null guard? Could in any case sc be null?
-            if (sc == null)
-                return;
-
-            // Grab the current window style
-            int oldStyle = NativeRelocatorMethods.GetWindowLong(instanceCopy, NativeRelocatorMethods.GWL_STYLE);
-
-            // Turn on dialog frame, border and sizebox atttribute
-            int newStyle = oldStyle + (NativeRelocatorMethods.WS_DLGFRAME | NativeRelocatorMethods.WS_BORDER | NativeRelocatorMethods.WS_SIZEBOX);
-
-            NativeRelocatorMethods.SetWindowLong(instanceCopy, NativeRelocatorMethods.GWL_STYLE, newStyle);
-
-            NativeRelocatorMethods.MoveWindow(instanceCopy, sc.Bounds.X, sc.Bounds.Y, cr.Width + 16, cr.Height + 38, true);
+            NativeRelocatorMethods.MoveWindow(hWnd, sc.Bounds.X, sc.Bounds.Y, cr.Width + hBorder, cr.Height + vBorder, true);
         }
 
         /// <summary>
@@ -297,7 +282,7 @@ namespace GameWindowRelocator
             // Has the user set a default monitor to relocate ?
             if (AutoRelocateDefaultMonitor != 0 && AutoRelocateDefaultMonitor <= screenCount)
             {
-                Relocate(gameInstance, s_autoRelocateDefaultMonitor - 1);
+                PositionWindow(gameInstance, s_autoRelocateDefaultMonitor - 1, PositioningAction.Relocate);
                 return;
             }
 
@@ -324,7 +309,7 @@ namespace GameWindowRelocator
                 if (gameInstance.GetClientRectInScreenCoords().Width != Screen.AllScreens[screen].Bounds.Width)
                     continue;
 
-                Relocate(gameInstance, screen);
+                PositionWindow(gameInstance, screen, PositioningAction.Relocate);
             }
         }
 
@@ -424,7 +409,7 @@ namespace GameWindowRelocator
                     button.Click += (sender, args) =>
                     {
                         selectedScreen = screen;
-                        Relocate(gameInstance, screen);
+                        PositionWindow(gameInstance, screen, PositioningAction.Relocate);
                         dialog.Close();
                     };
                 }

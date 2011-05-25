@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AssemblyInfo.template.cs" />
+    <Compile Include="Controllers\Enumerations.cs" />
     <Compile Include="Controllers\GamesList.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
