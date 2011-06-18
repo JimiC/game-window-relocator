@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Configuration;
 using System.Globalization;
+using System.IO;
 using System.Security;
 using System.Windows.Forms;
 using Microsoft.Win32;
@@ -55,6 +57,38 @@ namespace GameWindowRelocator.Views
             enableAutoRelacationChechBox.Checked = Properties.Settings.Default.EnableAutomaticRelocation;
 
             timeIntervalNUD.Value = Properties.Settings.Default.AutomaticRelocationInterval;
+        }
+
+
+        internal void UpgradeSettings()
+        {
+            // Find the settings file
+            Configuration settings = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+
+            // Quit if the settings file is of the current version
+            if (settings.HasFile)
+                return;
+
+            // Find the parent directories of the settings file
+            string configFileParentDir = Directory.GetParent(settings.FilePath).FullName;
+            string configFileParentParentDir = Directory.GetParent(configFileParentDir).FullName;
+            
+            // Quits if the parent directory doesn't exist
+            if (!Directory.Exists(configFileParentParentDir))
+                return;
+
+            // Upgrade the settings file to the current version
+            Properties.Settings.Default.Upgrade();
+
+            // Delete all old settings files
+            foreach (string directory in Directory.GetDirectories(configFileParentParentDir))
+            {
+                if (directory == configFileParentDir)
+                    continue;
+
+                // Delete the folder recursively
+                Directory.Delete(directory, true);
+            }
         }
 
         /// <summary>

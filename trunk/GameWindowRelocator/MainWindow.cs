@@ -38,6 +38,8 @@ namespace GameWindowRelocator
             if (DesignMode)
                 return;
 
+            settingsControl.UpgradeSettings();
+
             Visible = false;
             addEditControl.Visible = false;
             removeControl.Visible = false;

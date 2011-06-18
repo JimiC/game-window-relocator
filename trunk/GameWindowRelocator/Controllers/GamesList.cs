@@ -7,7 +7,7 @@ namespace GameWindowRelocator.Controllers
 {
     internal static class GamesList
     {
-        private static string s_filePath = Path.Combine(Directory.GetCurrentDirectory(), "gameslist.txt");
+        private static string s_filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "gameslist.txt");
         private static Dictionary<string, string> s_games = new Dictionary<string, string>();
 
         internal static Dictionary<string, string> ListOfGames
