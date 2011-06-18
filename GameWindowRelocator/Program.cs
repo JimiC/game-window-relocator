@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Windows.Forms;
+using System.Diagnostics;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace GameWindowRelocator
 {
@@ -12,6 +13,10 @@ namespace GameWindowRelocator
         [STAThread]
         static void Main()
         {
+            /// Ensures that only one instance is ran at once
+            if (Process.GetProcessesByName("GameWindowRelocator").Length > 1)
+                return;
+
             bool startMinimized = Environment.GetCommandLineArgs().Contains("-startMinimized");
 
             Application.EnableVisualStyles();
