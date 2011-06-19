@@ -47,6 +47,7 @@ namespace GameWindowRelocator.Views
         /// </summary>
         private void EditEntry()
         {
+            tbGameClientName.Focus();
             tbGameClientName.Text = ListControl.SelectedItem.Text;
             tbProcessName.Text = ListControl.SelectedItem.SubItems[1].Text;
         }
@@ -66,7 +67,9 @@ namespace GameWindowRelocator.Views
                 GamesList.ListOfGames.ContainsValue(tbProcessName.Text))
                 return;
 
-            GamesList.ListOfGames.Remove(ListControl.SelectedItem.Text);
+            if (ListControl.SelectedItem != null)
+                GamesList.ListOfGames.Remove(ListControl.SelectedItem.Text);
+
             GamesList.ListOfGames.Add(tbGameClientName.Text, tbProcessName.Text);
             GamesList.Export();
 
