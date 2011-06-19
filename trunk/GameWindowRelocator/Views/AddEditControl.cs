@@ -49,7 +49,6 @@ namespace GameWindowRelocator.Views
         {
             tbGameClientName.Text = ListControl.SelectedItem.Text;
             tbProcessName.Text = ListControl.SelectedItem.SubItems[1].Text;
-            GamesList.ListOfGames.Remove(ListControl.SelectedItem.Text);
         }
 
         /// <summary>
@@ -63,10 +62,11 @@ namespace GameWindowRelocator.Views
                 String.IsNullOrEmpty(tbProcessName.Text))
                 return;
 
-            if (GamesList.ListOfGames.ContainsKey(tbGameClientName.Text) ||
+            if (GamesList.ListOfGames.ContainsKey(tbGameClientName.Text) &&
                 GamesList.ListOfGames.ContainsValue(tbProcessName.Text))
                 return;
 
+            GamesList.ListOfGames.Remove(ListControl.SelectedItem.Text);
             GamesList.ListOfGames.Add(tbGameClientName.Text, tbProcessName.Text);
             GamesList.Export();
 
